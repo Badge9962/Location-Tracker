@@ -87,7 +87,7 @@ def index():
     try:
         new = Tracker()
         loc=new.google_maps()
-         Mail(message='location Tracked',location=loc)
+        Mail(message='location Tracked',location=loc)
         # lat=str(LOC[0])
         # long=str(LOC[1])
         # new=Location(lat,long)
