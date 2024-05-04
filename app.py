@@ -111,7 +111,8 @@ def index():
 ######### Image page #####################
 @app.route('/home')
 def send_mail():
-     return render_template('index.html')
+     # return render_template('index.html')
+    return 'hi'
 
 if __name__=="__main__":
 
