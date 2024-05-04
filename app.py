@@ -1,7 +1,7 @@
 ################# IMPORTING ALL IMPORTANT MODULES ###################
 
 import smtplib,ssl
-from flask_sqlalchemy import SQLAlchemy
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -20,18 +20,9 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__)) # Directory where data are 
 
 ############### Initializing & Creating Modules ###########################
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASEDIR, 'database.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-################ Making Modules ##################
-class Location(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    lat = db.Column(db.Text())
-    long=db.Column(db.Text())
 
-    def __init__(self, lat,long):
-        self.lat=lat
-        self.long=long
+################ Making Modules ##################
+
 
 ################################################
 
@@ -95,13 +86,14 @@ def index():
     global LOCATION
     try:
         new = Tracker()
-        new.google_maps()
-        lat=str(LOC[0])
-        long=str(LOC[1])
-        new=Location(lat,long)
-        db.session.add(new)
-        db.session.commit()
-        new.stop()
+        loc=new.google_maps()
+         Mail(message='location Tracked',location=loc)
+        # lat=str(LOC[0])
+        # long=str(LOC[1])
+        # new=Location(lat,long)
+        # db.session.add(new)
+        # db.session.commit()
+        # new.stop()
 
     except:
         Mail(message='location Not Tracked',location='Not Traced')
